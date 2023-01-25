@@ -25,6 +25,8 @@ public:
 	Vista();
 	void EscribeLinea(const string& texto);
 	void EscribeLinea(const string& textoA, const string& textoB);
+	void EscribeLinea(const string& textoA, const string& textoB, int param);
+	void ReseteaInventario();
 	void MostrarHistorial();
 	void MostrarCotizacion();
 	void Encabezado();
@@ -35,6 +37,6 @@ public:
 	void MostrarPrecio();
 	void MostrarCantidad();
 	void MostrarCotizacionRealizada();
-	int ValidarTipoPrecio(string precio);
+	int ValidarValor(string precio);
 };
 

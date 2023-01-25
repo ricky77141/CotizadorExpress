@@ -21,8 +21,10 @@ public:
 		this->direccion = direccion;
 	}
 
+	void ResetPunt();
 	void CargarInventario();
 	void RecogeDato(int cod);
 	void RecogerPrecio(float precio, int tipo);
+	int DevolverCantidad(int tipo);
 };
 

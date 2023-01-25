@@ -8,7 +8,7 @@ struct camisa
 	string tipoManga;
 	string tipoCuello;
 	string calidad;
-	string precio;
+	float precio;
 	int cantidadInventario;
 	int cantidadCotizacion;
 };
@@ -18,7 +18,7 @@ struct pantalon
 	string tipo;
 	string tipoPantalon;
 	string calidad;
-	string precio;
+	float precio;
 	int cantidadInventario;
 	int cantidadCotizacion;
 };

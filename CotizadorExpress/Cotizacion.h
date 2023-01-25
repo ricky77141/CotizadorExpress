@@ -14,7 +14,9 @@ class Cotizacion
 	int unidades;
 
 public:
+	void ResetInvent(Tienda* tienda);
 	void RecorrerInventario(Tienda* tienda, int codigo);
 	void CargaPrecio(Tienda* tienda, float precio, int tipo);
+	int EntregaCantidad(Tienda* tienda, int tipo);
 };
 

@@ -11,7 +11,9 @@ class Presentador
 
 public:
 	explicit Presentador(IVista* vista);
+	void ResetearInventario(Tienda* tienda);
 	void RecorrerInventario(Tienda* tienda, int codigo);
 	void CargaPrecio(Tienda* tienda, float precio, int tipo);
+	int TraerCantidad(Tienda* tienda, int tipo);
 };
 

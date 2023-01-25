@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "Tienda.h"
 
 using namespace std;
@@ -28,6 +29,10 @@ void Tienda::CargarInventario()
 	invt.insertar(33, 500, "Comunes");
 	invt.insertar(32, 250, "Standard");
 	invt.insertar(34, 250, "Premium");
+}
+
+void Tienda::ResetPunt()
+{
 	invt.InicializarPuntReco();
 }
 
@@ -75,5 +80,17 @@ void Tienda::RecogerPrecio(float precio, int tipoPrenda)
 	else
 	{
 		pm.precio = precio;
+	}
+}
+
+int Tienda::DevolverCantidad(int tipoPrenda)
+{
+	if (tipoPrenda == 0)
+	{
+		return cm.cantidadInventario;
+	}
+	else
+	{
+		return pm.cantidadInventario;
 	}
 }

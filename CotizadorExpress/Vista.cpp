@@ -23,8 +23,14 @@ void Vista::EscribeLinea(const string& texto)
 
 void Vista::EscribeLinea(const string& textoA, const string& textoB)
 {
-	cout << textoA << " | " << textoB << endl;
+	cout << textoA << " | " << textoB << endl;	
 }
+
+void Vista::EscribeLinea(const string& textoA, const string& textoB, int param)
+{
+	cout << textoA << " " << param << " " << textoB << endl;
+}
+
 
 void Vista::MostrarMenuPrincipal()
 {	
@@ -32,6 +38,7 @@ void Vista::MostrarMenuPrincipal()
 	string opcion;
 	nombre = mTienda->nombre;
 	direccion = mTienda->direccion;
+	ReseteaInventario();
 	do {
 		system("cls");
 		EscribeLinea("COTIZADOR EXPRESS - MENÚ PRINCIPAL");
@@ -96,7 +103,7 @@ void Vista::MostrarCotizacion()
 			regresar = true;
 			MostrarPantalonPasoA();
 		}
-		else if (opcion == "3")
+		else if (opcion == "M" || opcion == "m")
 		{
 			regresar = true;
 			MostrarMenuPrincipal();
@@ -132,18 +139,19 @@ void Vista::MostrarCamisaPasoA()
 		{
 			mPresentador->RecorrerInventario(mTienda, 6);
 			opcionCamisa = true;
-			//Cargar struct tipo camisa.
+			regresar = true;
 			MostrarCamisaPasoB();
 		}
 		else if (opcion == "2")
 		{
 			mPresentador->RecorrerInventario(mTienda, 14);
 			opcionCamisa = false;
-			//Cargar struct tipo camisa.
+			regresar = true;
 			MostrarCamisaPasoB();
 		}
-		else if (opcion == "3")
+		else if (opcion == "M" || opcion == "m")
 		{
+			regresar = true;
 			MostrarMenuPrincipal();
 		}
 		else
@@ -185,6 +193,7 @@ void Vista::MostrarCamisaPasoB()
 				mPresentador->RecorrerInventario(mTienda, 12);
 			}
 			opcionCuello = true;
+			regresar = true;
 			MostrarPasoC();
 		}
 		else if (opcion == "2")
@@ -198,10 +207,12 @@ void Vista::MostrarCamisaPasoB()
 				mPresentador->RecorrerInventario(mTienda, 16);
 			}
 			opcionCuello = false;
+			regresar = true;
 			MostrarPasoC();
 		}
-		else if (opcion == "3")
+		else if (opcion == "M" || opcion == "m")
 		{
+			regresar = true;
 			MostrarMenuPrincipal();
 		}
 		else
@@ -262,7 +273,7 @@ void Vista::MostrarPasoC()
 					mPresentador->RecorrerInventario(mTienda, 30);
 				}
 			}
-			//Cargar struct calidad.
+			regresar = true;
 			MostrarPrecio();
 		}
 		else if (opcion == "2")
@@ -297,11 +308,12 @@ void Vista::MostrarPasoC()
 					mPresentador->RecorrerInventario(mTienda, 34);
 				}
 			}
-			//Cargar struct calidad.
+			regresar = true;
 			MostrarPrecio();
 		}
-		else if (opcion == "3")
+		else if (opcion == "M" || opcion == "m")
 		{
+			regresar = true;
 			MostrarMenuPrincipal();
 		}
 		else
@@ -336,18 +348,19 @@ void Vista::MostrarPantalonPasoA()
 		{
 			mPresentador->RecorrerInventario(mTienda, 29);
 			opcionPantalon = true;
-			//Cargar struct calidad.
+			regresar = true;
 			MostrarPasoC();
 		}
 		else if (opcion == "2")
 		{
 			mPresentador->RecorrerInventario(mTienda, 33);
 			opcionPantalon = false;
-			//Cargar struct calidad.
+			regresar = true;
 			MostrarPasoC();
 		}
-		else if (opcion == "3")
+		else if (opcion == "M" || opcion == "m")
 		{
+			regresar = true;
 			MostrarMenuPrincipal();
 		}
 		else
@@ -369,6 +382,7 @@ void Vista::MostrarPrecio()
 	bool regresar = false;
 	string precio;
 	float precioUn;
+	int validacion;
 	
 	do {
 		Encabezado();
@@ -376,50 +390,107 @@ void Vista::MostrarPrecio()
 		cin >> precio;
 		system("cls");
 
-		if (precio == "3")
+		validacion = ValidarValor(precio);
+
+		if (precio == "M" || precio == "m")
 		{
+			regresar = true;
 			MostrarMenuPrincipal();
 		}
-		else
+		else if (validacion == 1)
 		{
-			ValidarTipoPrecio(precio);
-
+			EscribeLinea("Debe ingresar número con decimales separados por ,");
+			cin.get();
+			regresar = false;
+		}
+		else if (validacion == 3)
+		{
+			EscribeLinea("Solo deben ingresarse números decimales separados por ,");
+			cin.get();
+			regresar = false;
+		}
+		else if (validacion == 2)
+		{
 			precioUn = stof(precio);
 
 			if (camisa)
 			{
 				mPresentador->CargaPrecio(mTienda, precioUn, 0);
 			}
-			else 
+			else
 			{
 				mPresentador->CargaPrecio(mTienda, precioUn, 1);
 			}
+			regresar = true;
 			MostrarCantidad();
 		}
+		EscribeLinea("");
+		EscribeLinea("Presione cualquier tecla para continuar.");
+		cin.get();
 	} while (!regresar);
 }
 
 void Vista::MostrarCantidad()
 {
 	bool regresar = false;
-	string cantidad;
+	int cantidad;
+	string cantidadCotiz;
+	int cantidadFinal;
+	int validacion;
 
 	do {
-		Encabezado();
-		EscribeLinea("INFORMACION:");
-		EscribeLinea("Existe x cantidad de unidades en stock de la prenda seleccionada.");
-		EscribeLinea("PASO 5: Ingrese la cantidad de unidades a cotizar.");
-		cin >> cantidad;
-		system("cls");
-
-		if (cantidad == "3")
+		if (camisa)
 		{
-			MostrarMenuPrincipal();
+			cantidad = mPresentador->TraerCantidad(mTienda, 0);
 		}
 		else
 		{
-			MostrarCotizacion();
+			cantidad = mPresentador->TraerCantidad(mTienda, 1);
 		}
+		Encabezado();
+		EscribeLinea("INFORMACION:");
+		EscribeLinea("Existe", "cantidad de unidades en stock de la prenda seleccionada.", cantidad);
+		EscribeLinea("PASO 5: Ingrese la cantidad de unidades a cotizar.");
+		cin >> cantidadCotiz;
+		system("cls");
+
+		validacion = ValidarValor(cantidadCotiz);
+
+		if (cantidadCotiz == "M" || cantidadCotiz == "m")
+		{
+			regresar = true;
+			MostrarMenuPrincipal();
+		}
+		else if (validacion == 2)
+		{
+			EscribeLinea("Solo debe ingresar enteros.");
+			cin.get();
+			regresar = false;
+		}
+		else if (validacion == 3)
+		{
+			EscribeLinea("Solo puede ingresar números enteros.");
+			cin.get();
+			regresar = false;
+		} 		
+		else if (validacion == 1)
+		{
+			cantidadFinal = stoi(cantidadCotiz);
+			if (cantidadFinal > cantidad)
+			{
+				EscribeLinea("No hay suficiente stock en el inventario.");
+				cin.get();
+				regresar = false;
+			}
+			else
+			{
+				regresar = true;
+				//Se muestra la cotizacion en pantalla.
+			}
+		}
+		EscribeLinea("");
+		EscribeLinea("Presione cualquier tecla para continuar.");
+		cin.get();
 	} while (!regresar);
 }
 
@@ -433,7 +504,7 @@ void Vista::Encabezado()
 	system("cls");
 	EscribeLinea("COTIZADOR EXPRESS - COTIZAR");
 	EscribeLinea("----------------------------------------------------------");
-	EscribeLinea("Presione 3 para volver al menú principal");
+	EscribeLinea("Presione M para volver al menú principal");
 	EscribeLinea("----------------------------------------------------------");
 }
 
@@ -462,28 +533,32 @@ void Vista::EjecutarOpcion(const char* opcion, bool& salida)
 	}
 }
 
-int Vista::ValidarTipoPrecio(string precio)
+void Vista::ReseteaInventario()
+{
+	mPresentador->ResetearInventario(mTienda);
+}
+
+int Vista::ValidarValor(string precio)
 {
 	int x = 0;
 	string digito;
 
 	for (int i = 0; i < precio.size(); i++) {  
 		digito = precio[i];
-		//int val = digito.compare(",");
 
 		if (precio[i] == ',')
 			x++;
 
 		if (!isdigit(precio[i]) && precio[i] != ',' && precio[i] != '\0')
-			return 3;   /* Not a valid number. */
+			return 3;   
 	}
 
 	if (x == 0)
-		return 1;   /* Integer number. */
+		return 1;   
 
 	if (x == 1)
-		return 2;   /* Float number. */
+		return 2;   
 
 	if (x > 1)
-		return 3;   /* Not a valid number. */
+		return 3;   
 }
