@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include "Vista.h"
 #include "Tienda.h"
 
 using namespace std;
@@ -18,9 +19,8 @@ using namespace std;
 }*/
 
 int main()
-{
-    Tienda LaTienda("Casa","Por ahí");
-    LaTienda.CargarInventario();
+{      
+    Vista laVista;
     return 0;
 }
 

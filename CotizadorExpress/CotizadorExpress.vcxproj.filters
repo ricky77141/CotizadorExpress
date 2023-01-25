@@ -19,6 +19,9 @@
     <Filter Include="Vista">
       <UniqueIdentifier>{72a4df59-5318-4c2f-b1c2-96674ed56911}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Presentador">
+      <UniqueIdentifier>{b581dfa5-6745-4966-bf61-445d669bd868}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Vendedor.cpp">
@@ -37,7 +40,13 @@
       <Filter>Modelo</Filter>
     </ClCompile>
     <ClCompile Include="Vista.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Vista</Filter>
+    </ClCompile>
+    <ClCompile Include="Presentador.cpp">
+      <Filter>Presentador</Filter>
+    </ClCompile>
+    <ClCompile Include="Prenda.cpp">
+      <Filter>Modelo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +63,16 @@
       <Filter>Modelo</Filter>
     </ClInclude>
     <ClInclude Include="Vista.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Vista</Filter>
+    </ClInclude>
+    <ClInclude Include="IVista.h">
+      <Filter>Vista</Filter>
+    </ClInclude>
+    <ClInclude Include="Presentador.h">
+      <Filter>Presentador</Filter>
+    </ClInclude>
+    <ClInclude Include="Prenda.h">
+      <Filter>Modelo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

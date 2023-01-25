@@ -5,14 +5,14 @@
 using namespace std;
 
 Inventario::Inventario()
-{
+{    
 	raiz = NULL;
 }
 
-Inventario::~Inventario()
+/*Inventario::~Inventario()
 {
     borrar(raiz);
-}
+}*/
 
 void Inventario::borrar(Nodo* reco)
 {
@@ -52,5 +52,44 @@ void Inventario::insertar(int x, int y, string z)
             anterior->izq = nuevo;
         else
             anterior->der = nuevo;
+    }
+}
+
+void Inventario::InicializarPuntReco()
+{    
+    recogeDato=raiz;
+}
+
+int Inventario::Cantidad(int cod)
+{
+    
+    if (anterior->ident > cod)
+    {
+        anterior = anterior->izq;
+
+        return anterior->cantidad;
+    }
+    else
+    {
+        anterior = anterior->der;
+
+        return anterior->cantidad;
+    }
+}
+
+string Inventario::Tipo(int cod)
+{
+    anterior = recogeDato;
+    if (recogeDato->ident > cod)
+    {
+        recogeDato = recogeDato->izq;
+
+        return recogeDato->tipo;
+    }
+    else
+    {
+        recogeDato = recogeDato->der;
+
+        return recogeDato->tipo;
     }
 }

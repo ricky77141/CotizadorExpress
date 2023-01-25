@@ -1,24 +1,28 @@
 #pragma once
 #include <string>
 #include "Inventario.h"
+#include "Prenda.h"
 
 using namespace std;
 
-
-
 class Tienda
 {
+	Inventario invt;
+	camisa cm;
+	pantalon pm;
+public:
 	string nombre;
 	string direccion;
-	string prendas[2];
-	Inventario InvObj;
+	int cantidadInventario;	
 
-public:
 	Tienda(string nombre, string direccion)
 	{
-		this->nombre;
-		this->direccion;
+		this->nombre = nombre;
+		this->direccion = direccion;
 	}
+
 	void CargarInventario();
+	void RecogeDato(int cod);
+	void RecogerPrecio(float precio, int tipo);
 };
 

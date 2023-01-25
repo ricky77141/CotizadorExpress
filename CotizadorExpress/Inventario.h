@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <iostream>
+
 using namespace std;
 
 class Inventario
@@ -14,11 +14,15 @@ class Inventario
         Nodo* der;
     };
     Nodo* raiz;
+    Nodo* recogeDato;
+    Nodo* anterior;
     void borrar(Nodo* reco);
 public:
-    Inventario();
-    ~Inventario();
+    Inventario();    
     void insertar(int x, int y, string z);
+    void InicializarPuntReco();
+    int Cantidad(int cod);
+    string Tipo(int cod);
 };
 
 

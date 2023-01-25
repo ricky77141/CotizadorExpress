@@ -130,6 +130,8 @@
     <ClCompile Include="Cotizacion.cpp" />
     <ClCompile Include="CotizadorExpress.cpp" />
     <ClCompile Include="Inventario.cpp" />
+    <ClCompile Include="Prenda.cpp" />
+    <ClCompile Include="Presentador.cpp" />
     <ClCompile Include="Tienda.cpp" />
     <ClCompile Include="Vendedor.cpp" />
     <ClCompile Include="Vista.cpp" />
@@ -137,6 +139,9 @@
   <ItemGroup>
     <ClInclude Include="Cotizacion.h" />
     <ClInclude Include="Inventario.h" />
+    <ClInclude Include="IVista.h" />
+    <ClInclude Include="Prenda.h" />
+    <ClInclude Include="Presentador.h" />
     <ClInclude Include="Tienda.h" />
     <ClInclude Include="Vendedor.h" />
     <ClInclude Include="Vista.h" />
