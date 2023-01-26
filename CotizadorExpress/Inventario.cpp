@@ -9,11 +9,6 @@ Inventario::Inventario()
 	raiz = NULL;
 }
 
-/*Inventario::~Inventario()
-{
-    borrar(raiz);
-}*/
-
 void Inventario::borrar(Nodo* reco)
 {
     if (reco != NULL)
