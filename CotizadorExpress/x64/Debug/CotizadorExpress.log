@@ -1,2 +1,7 @@
-﻿  Inventario.cpp
+﻿  Tienda.cpp
+E:\CursoC++\CotizadorExpress\CotizadorExpress\Tienda.cpp(121,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+E:\CursoC++\CotizadorExpress\CotizadorExpress\Tienda.cpp(125,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+E:\CursoC++\CotizadorExpress\CotizadorExpress\Tienda.cpp(129,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+E:\CursoC++\CotizadorExpress\CotizadorExpress\Tienda.cpp(141,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+E:\CursoC++\CotizadorExpress\CotizadorExpress\Tienda.cpp(145,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
   CotizadorExpress.vcxproj -> E:\CursoC++\CotizadorExpress\x64\Debug\CotizadorExpress.exe

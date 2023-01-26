@@ -93,7 +93,6 @@ void Tienda::RecogeCantidad(int cant, int tipoPrenda)
 	{
 		pm.cantidadCotizacion = cant;
 	}
-	ResetPunt();
 	invt.DescargarInventario(cant);
 }
 
@@ -141,7 +140,7 @@ void Tienda::ArmarDatos(int tipo)
 		{
 			precioUn = precioUn - (precioUn * 0.12);
 		}
-		if (cm.calidad == "Premium")
+		if (pm.calidad == "Premium")
 		{
 			precioUn = precioUn + (precioUn * 0.3);
 		}

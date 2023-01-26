@@ -91,6 +91,7 @@ string Inventario::Tipo(int cod)
 
 void Inventario::DescargarInventario(int cantidad) 
 {
+    InicializarPuntReco();
     for (auto it = begin(camino); it != end(camino); ++it) {
         anterior = recogeDato;
         if (recogeDato->ident > *it)
