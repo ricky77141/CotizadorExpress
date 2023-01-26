@@ -83,6 +83,21 @@ void Tienda::RecogerPrecio(float precio, int tipoPrenda)
 	}
 }
 
+void Tienda::RecogeCantidad(int cant, int tipoPrenda)
+{
+	if (tipoPrenda == 0)
+	{
+		cm.cantidadCotizacion = cant;
+	}
+	else
+	{
+		pm.cantidadCotizacion = cant;
+	}
+	ResetPunt();
+	invt.DescargarInventario(cant);
+}
+
+
 int Tienda::DevolverCantidad(int tipoPrenda)
 {
 	if (tipoPrenda == 0)
@@ -92,5 +107,45 @@ int Tienda::DevolverCantidad(int tipoPrenda)
 	else
 	{
 		return pm.cantidadInventario;
+	}	
+}
+
+void Tienda::ArmarDatos(int tipo)
+{
+	if (tipo == 0)
+	{
+		cantidadInventario = cm.cantidadInventario;
+		descPrenda = cm.tipo + " - " + cm.tipoManga + " - " + cm.tipoCuello + " - " + cm.calidad;
+		precioUn = cm.precio;
+		if (cm.tipoManga == "Manga Corta")
+		{
+			precioUn = precioUn - (precioUn * 0.1);
+		}
+		if (cm.tipoCuello == "Cuello Mao")
+		{
+			precioUn = precioUn + (precioUn * 0.03);
+		}
+		if (cm.calidad == "Premium")
+		{
+			precioUn = precioUn + (precioUn * 0.3);
+		}
+		cantidad = cm.cantidadCotizacion;
+		precioFinal = precioUn * cantidad;
+	}
+	else
+	{
+		cantidadInventario = pm.cantidadInventario;
+		descPrenda = pm.tipo + " - " + pm.tipoPantalon + " - " + pm.calidad;
+		precioUn = pm.precio;
+		if (pm.tipoPantalon == "Chupines")
+		{
+			precioUn = precioUn - (precioUn * 0.12);
+		}
+		if (cm.calidad == "Premium")
+		{
+			precioUn = precioUn + (precioUn * 0.3);
+		}
+		cantidad = pm.cantidadCotizacion;
+		precioFinal = precioUn * cantidad;
 	}
 }

@@ -133,7 +133,6 @@
     <ClCompile Include="Prenda.cpp" />
     <ClCompile Include="Presentador.cpp" />
     <ClCompile Include="Tienda.cpp" />
-    <ClCompile Include="Vendedor.cpp" />
     <ClCompile Include="Vista.cpp" />
   </ItemGroup>
   <ItemGroup>

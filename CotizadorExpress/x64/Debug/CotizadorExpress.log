@@ -1,8 +1,1 @@
-﻿  Cotizacion.cpp
-  CotizadorExpress.cpp
-  Presentador.cpp
-  Tienda.cpp
-  Vista.cpp
-  Generando código...
-E:\CursoC++\CotizadorExpress\CotizadorExpress\Vista.cpp(564): warning C4715: 'Vista::ValidarValor': no todas las rutas de acceso de control devuelven un valor
-  CotizadorExpress.vcxproj -> E:\CursoC++\CotizadorExpress\x64\Debug\CotizadorExpress.exe
+﻿  CotizadorExpress.vcxproj -> E:\CursoC++\CotizadorExpress\x64\Debug\CotizadorExpress.exe

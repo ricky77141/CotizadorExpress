@@ -1,4 +1,6 @@
 #include <Windows.h>
+#include <iomanip>
+#include <list>
 #include "Vista.h"
 #include "Presentador.h"
 #include "Tienda.h"
@@ -8,7 +10,8 @@ using namespace std;
 Vista::Vista()
 {	
 	mTienda = new Tienda("La esquina de la ropa", "Clle. 32B #64B-54");
-	mTienda->CargarInventario();	
+	mTienda->CargarInventario();
+	mVendedor = new Vendedor("Benito", "Camelo", 1);
 	SetConsoleTitleW(L"Cotizador express");
 	setlocale(LC_ALL, "es_Es");
 	mPresentador = new Presentador(this);
@@ -21,15 +24,32 @@ void Vista::EscribeLinea(const string& texto)
 	cout << texto << endl;	
 }
 
-void Vista::EscribeLinea(const string& textoA, const string& textoB)
+void Vista::EscribeLinea(const string& textoA, const string& textoB, bool param)
 {
-	cout << textoA << " | " << textoB << endl;	
+	if (param)
+	{
+		cout << textoA << " | " << textoB << endl;
+	} else
+	{
+		cout << textoA << " " << textoB << endl;
+	}
 }
 
 void Vista::EscribeLinea(const string& textoA, const string& textoB, int param)
 {
 	cout << textoA << " " << param << " " << textoB << endl;
 }
+
+void Vista::EscribeLinea(const string& textoA, int param)
+{
+	cout << textoA << " " << param  << endl;
+}
+
+void Vista::EscribeLinea(const string& textoA, float param)
+{
+	cout << textoA << " " << fixed << setprecision(2) << param << endl;
+}
+
 
 
 void Vista::MostrarMenuPrincipal()
@@ -38,14 +58,16 @@ void Vista::MostrarMenuPrincipal()
 	string opcion;
 	nombre = mTienda->nombre;
 	direccion = mTienda->direccion;
+	nombreV = mVendedor->nombre;
+	apellidoV = mVendedor->apellido;
 	ReseteaInventario();
 	do {
 		system("cls");
 		EscribeLinea("COTIZADOR EXPRESS - MENÚ PRINCIPAL");
 		EscribeLinea("----------------------------------------------------------");
-		EscribeLinea(nombre, direccion);
+		EscribeLinea("Tienda: " + nombre, "Dirección: " + direccion, true);
 		EscribeLinea("----------------------------------------------------------");
-		EscribeLinea("Nombre");
+		EscribeLinea("Nombre: " + nombreV, "Apellido: " + apellidoV, true);
 		EscribeLinea("----------------------------------------------------------");
 		EscribeLinea("");
 		EscribeLinea("Seleccione opción:");
@@ -66,11 +88,44 @@ void Vista::MostrarMenuPrincipal()
 void Vista::MostrarHistorial()
 {
 	bool regresar = false;
+	string opcion;
+
+	listHistorico = mPresentador->RecogeHist();
 
 	do {
 		system("cls");
 		EscribeLinea("COTIZADOR EXPRESS - HISTORIAL");
 		EscribeLinea("----------------------------------------------------------");
+		EscribeLinea("Escriba M para regresar al menú principal.");
+		EscribeLinea("----------------------------------------------------------");
+		for (auto it = begin(*listHistorico); it != end(*listHistorico); ++it)
+		{
+			EscribeLinea("Número de identificación: ", it->numId);
+			EscribeLinea("Fecha y hora de la cotización: ", it->fechaHoraCotiz, false);
+			EscribeLinea("Código del vendedor: ", it->codVendedor);
+			EscribeLinea("Prenda cotizada: ", it->prendaCotiz, false);
+			EscribeLinea("Precio unitario: $", it->precioUn);
+			EscribeLinea("Cantidad de unidades cotizadas: ", it->cantCotiz);
+			EscribeLinea("Precio final: $", it->precioFinal);
+			cout << "\n";
+		}
+		cin >> opcion;
+
+		if (opcion == "M" || opcion == "m")
+		{
+			regresar = true;
+			MostrarMenuPrincipal();
+		}
+		else
+		{
+			EscribeLinea("Opcion erronea");
+			cin.get();
+			regresar = false;
+		}
+		EscribeLinea("");
+		EscribeLinea("Presione cualquier tecla para continuar.");
+		cin.get();
+
 	
 	} while (!regresar);
 }
@@ -485,6 +540,17 @@ void Vista::MostrarCantidad()
 			else
 			{
 				regresar = true;
+				if (camisa)
+				{
+					mPresentador->RecogeCantidad(mTienda,cantidadFinal,0);
+					mPresentador->ArmaDatos(mTienda, 0);
+				}
+				else
+				{
+					mPresentador->RecogeCantidad(mTienda, cantidadFinal, 1);
+					mPresentador->ArmaDatos(mTienda, 1);
+				}
+				PresentarCotizacion();
 				//Se muestra la cotizacion en pantalla.
 			}
 		}
@@ -494,9 +560,32 @@ void Vista::MostrarCantidad()
 	} while (!regresar);
 }
 
-void Vista::MostrarCotizacionRealizada()
+void Vista::PresentarCotizacion()
 {
+	bool regresar = false;
+	int codVendedor = mVendedor->codigoVendedor;
+	string opcion;
 
+	mPresentador->ArmaCotiz(mTienda);
+	dcVista = mPresentador->EntregaData();	
+
+	do {
+		Encabezado();
+		EscribeLinea("Número de identificación: ", dcVista.numId);
+		EscribeLinea("Fecha y hora de la cotización: ", dcVista.fechaHoraCotiz, false);
+		EscribeLinea("Código del vendedor: ", codVendedor);
+		EscribeLinea("Prenda cotizada: ", dcVista.prendaCotiz, false);
+		EscribeLinea("Precio unitario: $", dcVista.precioUn);
+		EscribeLinea("Cantidad de unidades cotizadas: ", dcVista.cantCotiz);
+		EscribeLinea("Precio final: $", dcVista.precioFinal);
+		cin >> opcion;
+		if (opcion == "M" || opcion == "m")
+		{
+			regresar = true;
+			MostrarMenuPrincipal();
+		}
+
+	} while (!regresar);
 }
 
 void Vista::Encabezado()
@@ -522,6 +611,9 @@ void Vista::EjecutarOpcion(const char* opcion, bool& salida)
 	}
 	else if (strOpcion == "3")
 	{
+		delete mPresentador;
+		delete mTienda;
+		delete mVendedor;
 		cout.flush();
 		exit(EXIT_SUCCESS);
 	}

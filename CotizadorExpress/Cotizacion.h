@@ -1,22 +1,36 @@
 #pragma once
 #include <string>
 #include <ctime>
+#include <list>
 #include "Tienda.h"
+
+class Presentador;
+
 
 using namespace std;
 
+struct DatosCotizacion
+{
+	int numId;
+	string fechaHoraCotiz;
+	int codVendedor;
+	string prendaCotiz;
+	float precioUn;
+	int cantCotiz;
+	float precioFinal;
+};
+
 class Cotizacion
 {
-
-	int numCotizacion;
-	time_t fechaHoraCotizacion;
-	int codigoVendedor;
-	int unidades;
-
+	int numCotizacion=0;
+	DatosCotizacion dc;		
+	list<DatosCotizacion> dcList;	
+	string str;
 public:
-	void ResetInvent(Tienda* tienda);
-	void RecorrerInventario(Tienda* tienda, int codigo);
-	void CargaPrecio(Tienda* tienda, float precio, int tipo);
-	int EntregaCantidad(Tienda* tienda, int tipo);
+	
+	void ArmarCotizacion(Tienda* tienda);
+	void CalcularTiempo();
+	DatosCotizacion EntregaData();
+	list<DatosCotizacion>* EntregaDataHist();
 };
 

@@ -83,13 +83,36 @@ string Inventario::Tipo(int cod)
     if (recogeDato->ident > cod)
     {
         recogeDato = recogeDato->izq;
-
+        camino.push_back(cod);
         return recogeDato->tipo;
     }
     else
     {
         recogeDato = recogeDato->der;
-
+        camino.push_back(cod);
         return recogeDato->tipo;
     }
+}
+
+void Inventario::DescargarInventario(int cantidad) 
+{
+    for (auto it = begin(camino); it != end(camino); ++it) {
+        anterior = recogeDato;
+        if (recogeDato->ident > *it)
+        {
+            recogeDato = recogeDato->izq;
+            recogeDato->cantidad = recogeDato->cantidad - cantidad;
+        }
+        else
+        {
+            recogeDato = recogeDato->der;
+            recogeDato->cantidad = recogeDato->cantidad - cantidad;
+        }
+    }
+    camino.clear();
+}
+
+void Inventario::InicializarDest() 
+{
+    borrar(raiz);
 }
